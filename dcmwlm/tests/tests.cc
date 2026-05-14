@@ -24,6 +24,7 @@
 #include "dcmtk/dcmnet/dcmlayer.h"
 
 OFTEST_REGISTER(dcmwlm_aetitle_validation);
+OFTEST_REGISTER(dcmwlm_vetmed_matching);
 
 #ifdef WITH_TCPWRAPPER
 // This dummy function creates a dependency on libdcmnet that is required when compiling
