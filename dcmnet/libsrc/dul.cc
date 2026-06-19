@@ -2045,7 +2045,10 @@ receiveTransportConnectionTCP(PRIVATE_NETWORKKEY ** network,
         if ((*network)->options & DUL_FULLDOMAINNAME)
             OFStandard::strlcpy(node, client_dns_name.c_str(), sizeof(node));
         else {
-            if (sscanf(client_dns_name.c_str(), "%[^.]", node) != 1)
+            // extract the first label (up to the first '.') of the hostname. The field width
+            // (sizeof(node)-1 = 259) must be specified to prevent a stack buffer overflow, since
+            // the DNS name returned by getHostnameByAddress() may be longer than this buffer.
+            if (sscanf(client_dns_name.c_str(), "%259[^.]", node) != 1)
                 node[0] = '\0';
         }
         OFStandard::strlcpy((*association)->remoteNode, node, sizeof((*association)->remoteNode));
