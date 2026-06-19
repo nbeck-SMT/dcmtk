@@ -725,9 +725,13 @@ static void DB_DuplicateElement (DB_SmallDcmElmt *src, DB_SmallDcmElmt *dst)
     if (src -> ValueLength == 0)
         dst -> PValueField = NULL;
     else {
-        dst -> PValueField = (char *)malloc ((int) src -> ValueLength+1);
-        memset(dst->PValueField, 0, (size_t)(src->ValueLength+1));
+        // use a size_t cast (not int) for the allocation size to avoid a sign flip/truncation
+        // for large ValueLength values, which would otherwise make the allocation smaller than
+        // the subsequent memcpy and cause a heap buffer overflow.
+        dst -> PValueField = (char *)malloc ((size_t) src -> ValueLength + 1);
+        // only access the buffer after a successful allocation (memset/memcpy must not run on NULL)
         if (dst->PValueField != NULL) {
+            memset(dst->PValueField, 0, (size_t)(src->ValueLength) + 1);
             memcpy (dst -> PValueField,  src -> PValueField,
                 (size_t) src -> ValueLength);
         } else {
