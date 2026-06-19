@@ -30,7 +30,9 @@
 #include "dcmtk/dcmsr/dsrcodvl.h"
 
 /// maximum nesting level supported when reading from XML
+#ifndef DCMSR_MAX_XML_NESTING_LEVEL
 #define DCMSR_MAX_XML_NESTING_LEVEL 128
+#endif
 
 // include this file in doxygen documentation
 

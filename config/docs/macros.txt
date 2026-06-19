@@ -31,6 +31,19 @@ BUGGY_IMPLEMENTATION_CLASS_UID_PREFIX
     activated in storescp whenever a Storage SCU with the given implementation
     class UID root connects.
 
+DCMJSON_MAX_SEQUENCE_NESTING
+  Affected: dcmdata
+  Type of modification: Toolkit customization
+  Explanation: Maximum supported nesting level for sequences of items
+    when parsing a DICOM dataset from JSON. Default is 128.
+
+DCMSR_MAX_XML_NESTING_LEVEL
+  Affected: dcmsr
+  Type of modification: Toolkit customization
+  Explanation: Maximum supported nesting level for SR content items
+    when parsing the XML representation of structured reports.
+    Default is 128.
+
 DCMTK_BUILD_DATE
   Affected: dcmdata
   Type of modification: Toolkit customization
@@ -156,6 +169,19 @@ DCMTK_USE_UNIX_SOCKET_QUEUE
     threads are available).  This macro can be used on platforms where the use
     of the other IPC mechanisms causes problems, e.g. because of platform
     specific limitations to the number of queues permitted system-wide.
+
+DCMXML_MAX_SEQUENCE_NESTING
+  Affected: dcmdata
+  Type of modification: Toolkit customization
+  Explanation: Maximum supported nesting level for sequences of items
+    when parsing a DICOM dataset from XML. Default is 128.
+
+DICOMDIR_MAX_RECURSION_DEPTH
+  Affected: dcmdata
+  Type of modification: Toolkit customization
+  Explanation: Maximum supported nesting level for the logical tree
+    structure built from the DirectoryRecordSequence when reading a
+    DICOMDIR. Default is 8.
 
 DICOMDIR_WITHOUT_BACKUP
   Affected: dcmdata
@@ -570,6 +596,13 @@ WRITE_VERY_LARGE_CHUNKS
     i.e. to always call fwrite with as much data as possible, which is known
     not to work correctly on Win32 but might offer very minor performance
     benefits on other platforms.
+
+XMLMaxRecursionDepth
+  Affected: ofstd
+  Type of modification: Toolkit customization
+  Explanation: Maximum supported nesting level for XML tags when
+    parsing an XML dataset using the XMLParser library (ofxml.h).
+    Default is 512.
 
 ZLIB_ENCODE_RFC1950_HEADER
   Affected: dcmdata

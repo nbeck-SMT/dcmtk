@@ -228,7 +228,9 @@ typedef enum XMLError
 } XMLError;
 
 // DCMTK: limit for supported recursion depth
+#ifndef XMLMaxRecursionDepth
 #define XMLMaxRecursionDepth 512
+#endif
 
 /// Enumeration used to manage type of data. Use in conjunction with structure XMLNodeContents
 typedef enum XMLElementType

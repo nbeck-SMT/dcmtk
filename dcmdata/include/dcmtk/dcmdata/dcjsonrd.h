@@ -34,7 +34,9 @@ class OFCondition;
 #include "dcmtk/ofstd/ofjsmn.h"         /* for JSMN declarations  */
 
 /// maximum sequence nesting level supported
+#ifndef DCMJSON_MAX_SEQUENCE_NESTING
 #define DCMJSON_MAX_SEQUENCE_NESTING 128
+#endif
 
 typedef jsmn_parser OFJsmnParser;
 typedef jsmntok_t OFJsmnToken;

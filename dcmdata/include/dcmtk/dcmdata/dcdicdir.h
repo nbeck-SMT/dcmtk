@@ -42,7 +42,9 @@
  *  while still preventing a stack overflow when reading a malformed
  *  DICOMDIR.
  */
+#ifndef DICOMDIR_MAX_RECURSION_DEPTH
 #define DICOMDIR_MAX_RECURSION_DEPTH  8
+#endif
 
 /** helper structure for item offsets
  */

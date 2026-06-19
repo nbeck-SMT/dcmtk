@@ -55,7 +55,9 @@ typedef xmlDoc *xmlDocPtr;
 #include DCMTK_DIAGNOSTIC_POP
 
 /// maximum sequence nesting level supported
+#ifndef DCMXML_MAX_SEQUENCE_NESTING
 #define DCMXML_MAX_SEQUENCE_NESTING 128
+#endif
 
 class DcmElement;
 class DcmItem;
