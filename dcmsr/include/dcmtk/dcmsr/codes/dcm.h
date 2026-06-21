@@ -5,8 +5,8 @@
  *
  *  Header file with DICOM Controlled Terminology Code Definitions (Coding Scheme "DCM", Version "01")
  *
- *  Generated automatically from DICOM PS 3.16-2026b
- *  File created on 2026-03-28 10:26:32 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2026c
+ *  File created on 2026-06-21 21:03:41 by J. Riesmeier
  *
  */
 
@@ -34,8 +34,8 @@
  *  code definitions  *
  *--------------------*/
 
-// total number of codes: 5146
-// - retired: 212
+// total number of codes: 5164
+// - retired: 213
 // - no name: 27
 // - not unique: 17
 
@@ -432,6 +432,11 @@
 #define CODE_DCM_Dictation                                                 DSRBasicCodedEntry("110011", "DCM", "Dictation")
 #define CODE_DCM_Transcription_110012                                      DSRBasicCodedEntry("110012", "DCM", "Transcription")
 #define CODE_DCM_MediaImport                                               DSRBasicCodedEntry("110013", "DCM", "Media Import")
+#define CODE_DCM_ImageReconstruction                                       DSRBasicCodedEntry("110014", "DCM", "Image Reconstruction")
+#define CODE_DCM_CTImageReconstruction                                     DSRBasicCodedEntry("110015", "DCM", "CT Image Reconstruction")
+#define CODE_DCM_MRImageReconstruction                                     DSRBasicCodedEntry("110016", "DCM", "MR Image Reconstruction")
+#define CODE_DCM_PETImageReconstruction                                    DSRBasicCodedEntry("110017", "DCM", "PET Image Reconstruction")
+#define CODE_DCM_XRayTomographyImageReconstruction                         DSRBasicCodedEntry("110018", "DCM", "X-Ray Tomography Image Reconstruction")
 #define CODE_DCM_SheetFilmDigitized                                        DSRBasicCodedEntry("110020", "DCM", "Sheet Film Digitized")
 #define CODE_DCM_CineFilmDigitized                                         DSRBasicCodedEntry("110021", "DCM", "Cine Film Digitized")
 #define CODE_DCM_VideoTapeDigitized                                        DSRBasicCodedEntry("110022", "DCM", "Video Tape Digitized")
@@ -1678,13 +1683,13 @@
 #define CODE_DCM_ComponentType                                             DSRBasicCodedEntry("112370", "DCM", "Component Type")
 #define CODE_DCM_ManufacturerImplantTemplate                               DSRBasicCodedEntry("112371", "DCM", "Manufacturer Implant Template")
 #define CODE_DCM_DerivedPlanningImages                                     DSRBasicCodedEntry("112372", "DCM", "Derived Planning Images")
-#define CODE_DCM_OtherDerivedPlanningData                                  DSRBasicCodedEntry("112373", "DCM", "Other Derived Planning Data")
+#define CODE_DCM_DerivedPlanningData                                       DSRBasicCodedEntry("112373", "DCM", "Derived Planning Data")
 #define CODE_DCM_ConnectedImplantationPlanComponent                        DSRBasicCodedEntry("112374", "DCM", "Connected Implantation Plan Component")
 #define CODE_DCM_PlanningMethod                                            DSRBasicCodedEntry("112375", "DCM", "Planning Method")
 #define CODE_DCM_DegreeOfFreedomExactTranslationalValue                    DSRBasicCodedEntry("112376", "DCM", "Degree of Freedom Exact Translational Value")
 #define CODE_DCM_DegreeOfFreedomMinimumTranslationalValue                  DSRBasicCodedEntry("112377", "DCM", "Degree of Freedom Minimum Translational Value")
 #define CODE_DCM_DegreeOfFreedomMaximumTranslationalValue                  DSRBasicCodedEntry("112378", "DCM", "Degree of Freedom Maximum Translational Value")
-#define CODE_DCM_DegreeOfFreedomExactRotationalTranslationValue            DSRBasicCodedEntry("112379", "DCM", "Degree of Freedom Exact Rotational Translation Value")
+#define CODE_DCM_DegreeOfFreedomExactRotationalValue                       DSRBasicCodedEntry("112379", "DCM", "Degree of Freedom Exact Rotational Value")
 #define CODE_DCM_DegreeOfFreedomMinimumRotationalValue                     DSRBasicCodedEntry("112380", "DCM", "Degree of Freedom Minimum Rotational Value")
 #define CODE_DCM_DegreeOfFreedomMaximumRotationalValue                     DSRBasicCodedEntry("112381", "DCM", "Degree of Freedom Maximum Rotational Value")
 #define CODE_DCM_PeriOperativePhotographicImaging                          DSRBasicCodedEntry("112700", "DCM", "Peri-operative Photographic Imaging")
@@ -2335,7 +2340,7 @@
 #define CODE_DCM_RoomIdentification                                        DSRBasicCodedEntry("121121", "DCM", "Room identification")
 #define CODE_DCM_EquipmentIdentification                                   DSRBasicCodedEntry("121122", "DCM", "Equipment Identification")
 #define CODE_DCM_PatientStatusOrEvent                                      DSRBasicCodedEntry("121123", "DCM", "Patient Status or Event")
-#define CODE_DCM_ProcedureActionItemID                                     DSRBasicCodedEntry("121124", "DCM", "Procedure Action Item ID")
+#define CODE_DCM_ProcedureActionID                                         DSRBasicCodedEntry("121124", "DCM", "Procedure Action ID")
 #define CODE_DCM_DateTimeOfRecordingOfLogEntry                             DSRBasicCodedEntry("121125", "DCM", "DateTime of Recording of Log Entry")
 #define CODE_DCM_PerformedProcedureStepSOPInstanceUID                      DSRBasicCodedEntry("121126", "DCM", "Performed Procedure Step SOP Instance UID")
 #define CODE_DCM_PerformedProcedureStepSOPClassUID                         DSRBasicCodedEntry("121127", "DCM", "Performed Procedure Step SOP Class UID")
@@ -2794,7 +2799,7 @@
 #define CODE_DCM_122261                                                    DSRBasicCodedEntry("122261", "DCM", "if (age > 60y) P50 = 29.3")
 #define CODE_DCM_122262                                                    DSRBasicCodedEntry("122262", "DCM", "Area = Flow / 44.5 * sqrt(Gradient[mmHg])")
 #define CODE_DCM_122263                                                    DSRBasicCodedEntry("122263", "DCM", "MVA = Flow / 38.0 * sqrt(Gradient[mmHg])")
-#define CODE_DCM_122265                                                    DSRBasicCodedEntry("122265", "DCM", "BMI = Wt / Ht ^ 2")
+#define CODE_DCM_122265                                                    DSRBasicCodedEntry("122265", "DCM", "BMI = Wt/Ht^2")
 #define CODE_DCM_122266                                                    DSRBasicCodedEntry("122266", "DCM", "BSA = 0.007358*WT^0.425*HT^0.725")
 #define CODE_DCM_122267                                                    DSRBasicCodedEntry("122267", "DCM", "BSA = 0.010265*WT^0.423*HT^0.651")
 #define CODE_DCM_122268                                                    DSRBasicCodedEntry("122268", "DCM", "BSA = 0.008883*WT^0.444*HT^0.663")
@@ -2872,7 +2877,7 @@
 #define CODE_DCM_TotalPlaqueVolume                                         DSRBasicCodedEntry("122376", "DCM", "Total Plaque Volume")
 #define CODE_DCM_ProximalReference                                         DSRBasicCodedEntry("122380", "DCM", "Proximal Reference")
 #define CODE_DCM_DistalReference                                           DSRBasicCodedEntry("122381", "DCM", "Distal Reference")
-#define CODE_DCM_SiteOfLumenMinimum                                        DSRBasicCodedEntry("122382", "DCM", "Site of Lumen Minimum")
+#define CODE_DCM_SiteOfLuminalMinimum                                      DSRBasicCodedEntry("122382", "DCM", "Site of Luminal Minimum")
 #define CODE_DCM_EntirePullback                                            DSRBasicCodedEntry("122383", "DCM", "Entire Pullback")
 #define CODE_DCM_StentedRegion                                             DSRBasicCodedEntry("122384", "DCM", "Stented Region")
 #define CODE_DCM_ProximalStentMargin                                       DSRBasicCodedEntry("122385", "DCM", "Proximal Stent Margin")
@@ -2962,7 +2967,7 @@
 #define CODE_DCM_DiameterGraph                                             DSRBasicCodedEntry("122509", "DCM", "Diameter Graph")
 #define CODE_DCM_LengthLuminalSegment                                      DSRBasicCodedEntry("122510", "DCM", "Length Luminal Segment")
 #define CODE_DCM_GraphIncrement                                            DSRBasicCodedEntry("122511", "DCM", "Graph Increment")
-#define CODE_DCM_SiteOfMaximumLuminal                                      DSRBasicCodedEntry("122516", "DCM", "Site of Maximum Luminal")
+#define CODE_DCM_SiteOfLuminalMaximum                                      DSRBasicCodedEntry("122516", "DCM", "Site of Luminal Maximum")
 #define CODE_DCM_DensitometricLuminalCrossSectionalAreaGraph               DSRBasicCodedEntry("122517", "DCM", "Densitometric Luminal Cross-sectional Area Graph")
 #define CODE_DCM_PositionOfProximalBorder                                  DSRBasicCodedEntry("122528", "DCM", "Position of Proximal Border")
 #define CODE_DCM_PositionOfDistalBorder                                    DSRBasicCodedEntry("122529", "DCM", "Position of Distal Border")
@@ -3044,7 +3049,7 @@
 #define CODE_DCM_StentDisintegration                                       DSRBasicCodedEntry("122684", "DCM", "Stent Disintegration")
 #define CODE_DCM_StentComposition                                          DSRBasicCodedEntry("122685", "DCM", "Stent Composition")
 #define CODE_DCM_ParentVesselFinding                                       DSRBasicCodedEntry("122686", "DCM", "Parent Vessel Finding")
-#define CODE_DCM_SiteOfLumenMaximum                                        DSRBasicCodedEntry("122687", "DCM", "Site of Lumen Maximum")
+#define CODE_DCM_RETIRED_SiteOfLumenMaximum                                DSRBasicCodedEntry("122687", "DCM", "Site of Lumen Maximum")
 #define CODE_DCM_XConcept                                                  DSRBasicCodedEntry("122698", "DCM", "X-Concept")
 #define CODE_DCM_YConcept                                                  DSRBasicCodedEntry("122699", "DCM", "Y-Concept")
 #define CODE_DCM_IndicationsForPharmacologicalStress                       DSRBasicCodedEntry("122700", "DCM", "Indications for Pharmacological Stress")
@@ -3060,7 +3065,7 @@
 #define CODE_DCM_TimeSinceStartOfStage                                     DSRBasicCodedEntry("122710", "DCM", "Time since start of stage")
 #define CODE_DCM_ExerciseDurationAfterStressAgentInjection                 DSRBasicCodedEntry("122711", "DCM", "Exercise duration after stress agent injection")
 #define CODE_DCM_ImagingStartDateTime                                      DSRBasicCodedEntry("122712", "DCM", "Imaging Start DateTime")
-#define CODE_DCM_AttenuationCorrectionMethod                               DSRBasicCodedEntry("122713", "DCM", "Attenuation correction method")
+#define CODE_DCM_AttenuationCorrection                                     DSRBasicCodedEntry("122713", "DCM", "Attenuation correction")
 #define CODE_DCM_PharmacologicalStressAgentDose                            DSRBasicCodedEntry("122715", "DCM", "Pharmacological Stress Agent Dose")
 #define CODE_DCM_MaximumPowerOutputAchieved                                DSRBasicCodedEntry("122716", "DCM", "Maximum Power Output Achieved")
 #define CODE_DCM_PeakActivityWorkload                                      DSRBasicCodedEntry("122717", "DCM", "Peak activity workload")
@@ -4287,7 +4292,7 @@
 #define CODE_DCM_ImagingAgentAdministrationDelay                           DSRBasicCodedEntry("130197", "DCM", "Imaging Agent Administration Delay")
 #define CODE_DCM_ScanDelay                                                 DSRBasicCodedEntry("130198", "DCM", "Scan Delay")
 #define CODE_DCM_ImagingAgentAdministrationStepsDescription                DSRBasicCodedEntry("130199", "DCM", "Imaging Agent Administration Steps Description")
-#define CODE_DCM_ImagingAgentAdministrationProtocolName                    DSRBasicCodedEntry("130200", "DCM", "Imaging Agent Administration Protocol Name")
+#define CODE_DCM_ImagingAgentAdministrationStepsName                       DSRBasicCodedEntry("130200", "DCM", "Imaging Agent Administration Steps Name")
 #define CODE_DCM_ImagingAgentAdministrationPhase                           DSRBasicCodedEntry("130202", "DCM", "Imaging Agent Administration Phase")
 #define CODE_DCM_ImagingAgentAdministrationPhaseIdentifier                 DSRBasicCodedEntry("130203", "DCM", "Imaging Agent Administration Phase Identifier")
 #define CODE_DCM_ImagingAgentAdministrationPhaseType                       DSRBasicCodedEntry("130204", "DCM", "Imaging Agent Administration Phase Type")
@@ -5038,8 +5043,8 @@
 #define CODE_DCM_MaleTypical                                               DSRBasicCodedEntry("131231", "DCM", "Male-typical")
 #define CODE_DCM_Specified                                                 DSRBasicCodedEntry("131232", "DCM", "Specified")
 #define CODE_DCM_SubjectSexParametersForClinicalUseCategory                DSRBasicCodedEntry("131233", "DCM", "Subject Sex Parameters for Clinical Use Category")
-#define CODE_DCM_SexParametersForClinicalUseCategoryComment                DSRBasicCodedEntry("131234", "DCM", "Sex Parameters for Clinical Use Category Comment")
-#define CODE_DCM_SexParametersForClinicalUseCategoryReference              DSRBasicCodedEntry("131235", "DCM", "Sex Parameters for Clinical Use Category Reference")
+#define CODE_DCM_SubjectSexParametersForClinicalUseCategoryComment         DSRBasicCodedEntry("131234", "DCM", "Subject Sex Parameters for Clinical Use Category Comment")
+#define CODE_DCM_SubjectSexParametersForClinicalUseCategoryReference       DSRBasicCodedEntry("131235", "DCM", "Subject Sex Parameters for Clinical Use Category Reference")
 #define CODE_DCM_VisualFieldKeyMeasurements                                DSRBasicCodedEntry("131240", "DCM", "Visual Field Key Measurements")
 #define CODE_DCM_OpticDiscKeyMeasurements                                  DSRBasicCodedEntry("131241", "DCM", "Optic Disc Key Measurements")
 #define CODE_DCM_CircumpapillaryRetinalNerveFiberLayerKeyMeasurements      DSRBasicCodedEntry("131242", "DCM", "Circumpapillary Retinal Nerve Fiber Layer Key Measurements")
@@ -5194,5 +5199,18 @@
 #define CODE_DCM_ProjectionSpaceMAR                                        DSRBasicCodedEntry("131542", "DCM", "Projection-Space MAR")
 #define CODE_DCM_MultiEnergyMAR                                            DSRBasicCodedEntry("131543", "DCM", "Multi-Energy MAR")
 #define CODE_DCM_AIBasedMAR                                                DSRBasicCodedEntry("131544", "DCM", "AI-Based MAR")
+#define CODE_DCM_ImageQualityReferenceParameters                           DSRBasicCodedEntry("131550", "DCM", "Image Quality Reference Parameters")
+#define CODE_DCM_NoiseIndex                                                DSRBasicCodedEntry("131551", "DCM", "Noise Index")
+#define CODE_DCM_ReferenceMAs                                              DSRBasicCodedEntry("131552", "DCM", "Reference mAs")
+#define CODE_DCM_ManifestWithDescription                                   DSRBasicCodedEntry("131560", "DCM", "Manifest with Description")
+#define CODE_DCM_SeriesDate                                                DSRBasicCodedEntry("131561", "DCM", "Series Date")
+#define CODE_DCM_SeriesTime                                                DSRBasicCodedEntry("131562", "DCM", "Series Time")
+#define CODE_DCM_SeriesDescription                                         DSRBasicCodedEntry("131563", "DCM", "Series Description")
+#define CODE_DCM_NumberOfSeriesRelatedInstances                            DSRBasicCodedEntry("131564", "DCM", "Number of Series Related Instances")
+#define CODE_DCM_NumberOfStudyRelatedSeries                                DSRBasicCodedEntry("131565", "DCM", "Number of Study Related Series")
+#define CODE_DCM_BasisImageForSpectralProcessing                           DSRBasicCodedEntry("131566", "DCM", "Basis image for spectral processing")
+#define CODE_DCM_BasisImageDecomposition                                   DSRBasicCodedEntry("131567", "DCM", "Basis image decomposition")
+#define CODE_DCM_ComptonScattering                                         DSRBasicCodedEntry("131568", "DCM", "Compton Scattering")
+#define CODE_DCM_PhotoelectricEffect                                       DSRBasicCodedEntry("131569", "DCM", "Photoelectric Effect")
 
 #endif
