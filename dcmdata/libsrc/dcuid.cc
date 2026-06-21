@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1994-2025, OFFIS e.V.
+ *  Copyright (C) 1994-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -192,6 +192,7 @@ static const UIDNameMap uidNameMap[] = {
     { UID_CornealTopographyMapStorage,                                           "CornealTopographyMapStorage",                                        "CornealTopographyMapStorage",                                        { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_other,             UID_PROP_NONE } },
     { UID_CTDefinedProcedureProtocolStorage,                                     "CTDefinedProcedureProtocolStorage",                                  "CTDefinedProcedureProtocolStorage",                                  { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_other,             UID_PROP_NON_PATIENT | UID_PROP_NO_DIR_RECORD } },
     { UID_CTImageStorage,                                                        "CTImageStorage",                                                     "CTImageStorage",                                                     { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_NONE } },
+    { UID_CTImageStorageForProcessing,                                           "CTImageStorageForProcessing",                                        "CTImageStorageForProcessing",                                        { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_NONE } },
     { UID_CTPerformedProcedureProtocolStorage,                                   "CTPerformedProcedureProtocolStorage",                                "CTPerformedProcedureProtocolStorage",                                { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_other,             UID_PROP_NONE } },
     { UID_DeformableSpatialRegistrationStorage,                                  "DeformableSpatialRegistrationStorage",                               "DeformableSpatialRegistrationStorage",                               { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_other,             UID_PROP_NONE } },
     { UID_DermoscopicPhotographyImageStorage,                                    "DermoscopicPhotographyImageStorage",                                 "DermoscopicPhotographyImageStorage",                                 { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_NONE } },
@@ -210,6 +211,7 @@ static const UIDNameMap uidNameMap[] = {
     { UID_EncapsulatedSTLStorage,                                                "EncapsulatedSTLStorage",                                             "EncapsulatedSTLStorage",                                             { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Encapsulated,      UID_PROP_NONE } },
     { UID_EnhancedContinuousRTImageStorage,                                      "EnhancedContinuousRTImageStorage",                                   "EnhancedContinuousRTImageStorage",                                   { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_EnhancedCTImageStorage,                                                "EnhancedCTImageStorage",                                             "EnhancedCTImageStorage",                                             { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
+    { UID_EnhancedCTImageStorageForProcessing,                                   "EnhancedCTImageStorageForProcessing",                                "EnhancedCTImageStorageForProcessing",                                { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_EnhancedMRColorImageStorage,                                           "EnhancedMRColorImageStorage",                                        "EnhancedMRColorImageStorage",                                        { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_EnhancedMRImageStorage,                                                "EnhancedMRImageStorage",                                             "EnhancedMRImageStorage",                                             { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_EnhancedPETImageStorage,                                               "EnhancedPETImageStorage",                                            "EnhancedPETImageStorage",                                            { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
@@ -237,6 +239,7 @@ static const UIDNameMap uidNameMap[] = {
     { UID_KeyObjectSelectionDocumentStorage,                                     "KeyObjectSelectionDocumentStorage",                                  "KeyObjectSelectionDocumentStorage",                                  { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_StructuredReport,  UID_PROP_NONE } },
     { UID_LabelMapSegmentationStorage,                                           "LabelMapSegmentationStorage",                                        "LabelMapSegmentationStorage",                                        { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_LegacyConvertedEnhancedCTImageStorage,                                 "LegacyConvertedEnhancedCTImageStorage",                              "LegacyConvertedEnhancedCTImageStorage",                              { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
+    { UID_LegacyConvertedEnhancedCTImageStorageForProcessing,                    "LegacyConvertedEnhancedCTImageStorageForProcessing",                 "LegacyConvertedEnhancedCTImageStorageForProcessing",                 { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_LegacyConvertedEnhancedMRImageStorage,                                 "LegacyConvertedEnhancedMRImageStorage",                              "LegacyConvertedEnhancedMRImageStorage",                              { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_LegacyConvertedEnhancedPETImageStorage,                                "LegacyConvertedEnhancedPETImageStorage",                             "LegacyConvertedEnhancedPETImageStorage",                             { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_Image,             UID_PROP_ENHANCED_MF } },
     { UID_LensometryMeasurementsStorage,                                         "LensometryMeasurementsStorage",                                      "LensometryMeasurementsStorage",                                      { EUS_DICOM, EUV_Standard, EUT_SOPClass, EUST_Storage, EUIT_other,             UID_PROP_NONE } },
@@ -659,7 +662,6 @@ static const int uidNameMap_size = OFstatic_cast(int, sizeof(uidNameMap) / sizeo
  *  THIS LIST CONTAINS ALL STORAGE SOP CLASSES INCLUDING RETIRED ONES
  *  AND IS (MUCH) LARGER THAN 64 ENTRIES.
  */
-
 const char* dcmAllStorageSOPClassUIDs[] = {
     UID_AcquisitionContextSRStorage,
     UID_AdvancedBlendingPresentationStateStorage,
@@ -689,6 +691,7 @@ const char* dcmAllStorageSOPClassUIDs[] = {
     UID_ContentAssessmentResultsStorage,
     UID_CornealTopographyMapStorage,
     UID_CTImageStorage,
+    UID_CTImageStorageForProcessing,
     UID_CTPerformedProcedureProtocolStorage,
     UID_DeformableSpatialRegistrationStorage,
     UID_DermoscopicPhotographyImageStorage,
@@ -707,6 +710,7 @@ const char* dcmAllStorageSOPClassUIDs[] = {
     UID_EncapsulatedSTLStorage,
     UID_EnhancedContinuousRTImageStorage,
     UID_EnhancedCTImageStorage,
+    UID_EnhancedCTImageStorageForProcessing,
     UID_EnhancedMRColorImageStorage,
     UID_EnhancedMRImageStorage,
     UID_EnhancedPETImageStorage,
@@ -732,6 +736,7 @@ const char* dcmAllStorageSOPClassUIDs[] = {
     UID_KeyObjectSelectionDocumentStorage,
     UID_LabelMapSegmentationStorage,
     UID_LegacyConvertedEnhancedCTImageStorage,
+    UID_LegacyConvertedEnhancedCTImageStorageForProcessing,
     UID_LegacyConvertedEnhancedMRImageStorage,
     UID_LegacyConvertedEnhancedPETImageStorage,
     UID_LensometryMeasurementsStorage,
@@ -879,7 +884,6 @@ const int numberOfDcmAllStorageSOPClassUIDs = OFstatic_cast(int, sizeof(dcmAllSt
  *  that do not fit into the conventional PATIENT-STUDY-SERIES-INSTANCE
  *  information model. See function dcmIsaStorageSOPClassUID().
  */
-
 const char* dcmNonPatientStorageSOPClassUIDs[] = {
     UID_ColorPaletteStorage,
     UID_CTDefinedProcedureProtocolStorage,
@@ -1022,6 +1026,7 @@ const char* dcmLongSCUStorageSOPClassUIDs[] = {
 //  UID_ConfocalMicroscopyTiledPyramidalImageStorage,
 //  UID_ContentAssessmentResultsStorage,
 //  UID_CornealTopographyMapStorage,
+//  UID_CTImageStorageForProcessing,
 //  UID_CTPerformedProcedureProtocolStorage,
 //  UID_DermoscopicPhotographyImageStorage,
 //  UID_ElectromyogramWaveformStorage,
@@ -1030,6 +1035,7 @@ const char* dcmLongSCUStorageSOPClassUIDs[] = {
 //  UID_EncapsulatedOBJStorage,
 //  UID_EncapsulatedSTLStorage,
 //  UID_EnhancedContinuousRTImageStorage,
+//  UID_EnhancedCTImageStorageForProcessing,
 //  UID_EnhancedRTImageStorage,
 //  UID_EnhancedXRayRadiationDoseSRStorage,
 //  UID_ExtensibleSRStorage,
@@ -1037,6 +1043,7 @@ const char* dcmLongSCUStorageSOPClassUIDs[] = {
 //  UID_GrayscalePlanarMPRVolumetricPresentationStateStorage,
 //  UID_HeightMapSegmentationStorage,
 //  UID_LabelMapSegmentationStorage,
+//  UID_LegacyConvertedEnhancedCTImageStorageForProcessing,
 //  UID_MicroscopyBulkSimpleAnnotationsStorage,
 //  UID_MultichannelRespiratoryWaveformStorage,
 //  UID_MultipleVolumeRenderingVolumetricPresentationStateStorage,
@@ -1233,6 +1240,7 @@ const char* dcmImageSOPClassUIDs[] = {
     UID_ConfocalMicroscopyImageStorage,
     UID_ConfocalMicroscopyTiledPyramidalImageStorage,
     UID_CTImageStorage,
+    UID_CTImageStorageForProcessing,
     UID_CornealTopographyMapStorage,
     UID_DermoscopicPhotographyImageStorage,
     UID_DigitalIntraOralXRayImageStorageForPresentation,
@@ -1243,6 +1251,7 @@ const char* dcmImageSOPClassUIDs[] = {
     UID_DigitalXRayImageStorageForProcessing,
     UID_EnhancedContinuousRTImageStorage,
     UID_EnhancedCTImageStorage,
+    UID_EnhancedCTImageStorageForProcessing,
     UID_EnhancedMRColorImageStorage,
     UID_EnhancedMRImageStorage,
     UID_EnhancedPETImageStorage,
@@ -1255,6 +1264,7 @@ const char* dcmImageSOPClassUIDs[] = {
     UID_IntravascularOpticalCoherenceTomographyImageStorageForProcessing,
     UID_LabelMapSegmentationStorage,
     UID_LegacyConvertedEnhancedCTImageStorage,
+    UID_LegacyConvertedEnhancedCTImageStorageForProcessing,
     UID_LegacyConvertedEnhancedMRImageStorage,
     UID_LegacyConvertedEnhancedPETImageStorage,
     UID_MRImageStorage,
@@ -1360,6 +1370,7 @@ static const DcmModalityTable modalities[] = {
     { UID_CornealTopographyMapStorage,                             "CM",   512 * 512 },
     { UID_CTDefinedProcedureProtocolStorage,                       "PPcd", 4096 },  /* was PPd */
     { UID_CTImageStorage,                                          "CT",   512 * 512 * 2 },
+    { UID_CTImageStorageForProcessing,                             "CT",   512 * 512 * 2 },  /* same prefix as "for presentation" */
     { UID_CTPerformedProcedureProtocolStorage,                     "PPcp", 4096 },  /* was PPp */
     { UID_DeformableSpatialRegistrationStorage,                    "RGd",  4096 },
     { UID_DermoscopicPhotographyImageStorage,                      "VLd",  768 * 576 * 3 },
@@ -1378,6 +1389,7 @@ static const DcmModalityTable modalities[] = {
     { UID_EncapsulatedSTLStorage,                                  "STL",  4096 },
     { UID_EnhancedContinuousRTImageStorage,                        "RIc",  4096 },
     { UID_EnhancedCTImageStorage,                                  "CTe",  256 * 512 * 512 },
+    { UID_EnhancedCTImageStorageForProcessing,                     "CTe",  256 * 512 * 512 },  /* same prefix as "for presentation" */
     { UID_EnhancedMRColorImageStorage,                             "MRc",  256 * 512 * 512 * 3 },
     { UID_EnhancedMRImageStorage,                                  "MRe",  256 * 512 * 512 },
     { UID_EnhancedPETImageStorage,                                 "PIe",  512 * 512 * 2 },
@@ -1408,6 +1420,7 @@ static const DcmModalityTable modalities[] = {
     { UID_KeyObjectSelectionDocumentStorage,                       "KO",   4096 },
     { UID_LabelMapSegmentationStorage,                             "SGl",  512 * 512 },
     { UID_LegacyConvertedEnhancedCTImageStorage,                   "CTl",  512 * 512 * 2 },
+    { UID_LegacyConvertedEnhancedCTImageStorageForProcessing,      "CTl",  512 * 512 * 2 },  /* same prefix as "for presentation" */
     { UID_LegacyConvertedEnhancedMRImageStorage,                   "MRl",  256 * 256 * 2 },
     { UID_LegacyConvertedEnhancedPETImageStorage,                  "PIl",  512 * 512 * 2 },
     { UID_LensometryMeasurementsStorage,                           "OPl",  4096 },

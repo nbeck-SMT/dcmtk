@@ -869,6 +869,9 @@ DigitalIntraOralXRayImageStorageForProcessing        1.2.840.10008.5.1.4.1.1.1.3
 CTImageStorage                                       1.2.840.10008.5.1.4.1.1.2
 EnhancedCTImageStorage                               1.2.840.10008.5.1.4.1.1.2.1
 LegacyConvertedEnhancedCTImageStorage                1.2.840.10008.5.1.4.1.1.2.2
+CTImageStorageForProcessing                          1.2.840.10008.5.1.4.1.1.2.3
+EnhancedCTImageStorageForProcessing                  1.2.840.10008.5.1.4.1.1.2.4
+LegacyConvertedEnhancedCTImageStorageForProcessing   1.2.840.10008.5.1.4.1.1.2.5
 RETIRED_UltrasoundMultiframeImageStorage             1.2.840.10008.5.1.4.1.1.3
 UltrasoundMultiframeImageStorage                     1.2.840.10008.5.1.4.1.1.3.1
 MRImageStorage                                       1.2.840.10008.5.1.4.1.1.4
@@ -1262,6 +1265,6 @@ profiles
 
 \section dcmqrscp_copyright COPYRIGHT
 
-Copyright (C) 1993-2025 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 1993-2026 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */
