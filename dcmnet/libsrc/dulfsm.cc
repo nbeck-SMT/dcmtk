@@ -287,7 +287,7 @@ static void closeTransport(PRIVATE_ASSOCIATIONKEY ** association);
 static void closeTransportTCP(PRIVATE_ASSOCIATIONKEY ** association);
 static OFCondition
 readPDUHead(PRIVATE_ASSOCIATIONKEY ** association,
-            unsigned char *buffer, unsigned long maxlength,
+            unsigned char *buffer, size_t maxlength,
             DUL_BLOCKOPTIONS block, int timeout,
             unsigned char *PDUtype, unsigned char *PDUreserved,
             unsigned long *PDULength);
@@ -299,19 +299,19 @@ readPDU(PRIVATE_ASSOCIATIONKEY ** association, DUL_BLOCKOPTIONS block,
 static OFCondition
 readPDUBody(PRIVATE_ASSOCIATIONKEY ** association,
             DUL_BLOCKOPTIONS block, int timeout,
-            unsigned char *buffer, unsigned long maxLength,
+            unsigned char *buffer, size_t maxLength,
             unsigned char *pduType, unsigned char *pduReserved,
             unsigned long *pduLength);
 static OFCondition
 readPDUHeadTCP(PRIVATE_ASSOCIATIONKEY ** association,
-               unsigned char *buffer, unsigned long maxLength,
+               unsigned char *buffer, size_t maxLength,
                DUL_BLOCKOPTIONS block, int timeout,
                unsigned char *PDUtype, unsigned char *PDUreserved,
                unsigned long *PDULength);
 static OFCondition
 readPDUBodyTCP(PRIVATE_ASSOCIATIONKEY ** association,
                DUL_BLOCKOPTIONS block, int timeout,
-               unsigned char *buffer, unsigned long maxLength,
+               unsigned char *buffer, size_t maxLength,
                unsigned char *pduType, unsigned char *pduReserved,
                unsigned long *pduLength);
 static OFCondition
@@ -3441,7 +3441,7 @@ readPDU(PRIVATE_ASSOCIATIONKEY ** association, DUL_BLOCKOPTIONS block,
 */
 static OFCondition
 readPDUHead(PRIVATE_ASSOCIATIONKEY ** association,
-            unsigned char *buffer, unsigned long maxLength,
+            unsigned char *buffer, size_t maxLength,
             DUL_BLOCKOPTIONS block, int timeout,
             unsigned char *PDUType, unsigned char *PDUReserved,
             unsigned long *PDULength)
@@ -3511,7 +3511,7 @@ readPDUHead(PRIVATE_ASSOCIATIONKEY ** association,
 static OFCondition
 readPDUBody(PRIVATE_ASSOCIATIONKEY ** association,
             DUL_BLOCKOPTIONS block, int timeout,
-            unsigned char *buffer, unsigned long maxLength,
+            unsigned char *buffer, size_t maxLength,
             unsigned char *pduType, unsigned char *pduReserved,
             unsigned long *pduLength)
 {
@@ -3558,7 +3558,7 @@ readPDUBody(PRIVATE_ASSOCIATIONKEY ** association,
 
 static OFCondition
 readPDUHeadTCP(PRIVATE_ASSOCIATIONKEY ** association,
-               unsigned char *buffer, unsigned long maxLength,
+               unsigned char *buffer, size_t maxLength,
                DUL_BLOCKOPTIONS block, int timeout,
      unsigned char *type, unsigned char *reserved, unsigned long *pduLength)
 {
@@ -3667,7 +3667,7 @@ readPDUHeadTCP(PRIVATE_ASSOCIATIONKEY ** association,
 static OFCondition
 readPDUBodyTCP(PRIVATE_ASSOCIATIONKEY ** association,
                DUL_BLOCKOPTIONS block, int timeout,
-               unsigned char *buffer, unsigned long maxLength,
+               unsigned char *buffer, size_t maxLength,
                unsigned char *pduType, unsigned char *pduReserved,
                unsigned long *pduLength)
 {
