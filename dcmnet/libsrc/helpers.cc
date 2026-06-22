@@ -25,25 +25,40 @@
 #include "dcmtk/dcmnet/dulstruc.h"
 
 void
+destroyPresentationContext(PRV_PRESENTATIONCONTEXTITEM ** ctx)
+{
+    DUL_SUBITEM
+        * subItem;
+
+    if (*ctx == NULL)
+        return;
+
+    /* transferSyntaxList may be NULL if parsing failed before LST_Create() */
+    if ((*ctx)->transferSyntaxList != NULL) {
+        subItem = (DUL_SUBITEM*)LST_Dequeue(&(*ctx)->transferSyntaxList);
+        while (subItem != NULL) {
+            free(subItem);
+            subItem = (DUL_SUBITEM*)LST_Dequeue(&(*ctx)->transferSyntaxList);
+        }
+        LST_Destroy(&(*ctx)->transferSyntaxList);
+    }
+    free(*ctx);
+    *ctx = NULL;
+}
+
+
+void
 destroyAssociatePDUPresentationContextList(LST_HEAD ** pcList)
 {
     PRV_PRESENTATIONCONTEXTITEM
         * prvCtx;
-    DUL_SUBITEM
-        * subItem;
 
     if (*pcList == NULL)
         return;
 
     prvCtx = (PRV_PRESENTATIONCONTEXTITEM*)LST_Dequeue(pcList);
     while (prvCtx != NULL) {
-        subItem = (DUL_SUBITEM*)LST_Dequeue(&prvCtx->transferSyntaxList);
-        while (subItem != NULL) {
-            free(subItem);
-            subItem = (DUL_SUBITEM*)LST_Dequeue(&prvCtx->transferSyntaxList);
-        }
-        LST_Destroy(&prvCtx->transferSyntaxList);
-        free(prvCtx);
+        destroyPresentationContext(&prvCtx);
         prvCtx = (PRV_PRESENTATIONCONTEXTITEM*)LST_Dequeue(pcList);
     }
     LST_Destroy(pcList);

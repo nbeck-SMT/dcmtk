@@ -238,7 +238,12 @@ parseAssociate(unsigned char *buf, unsigned long pduLength,
                 cond = parsePresentationContext(type, context, buf, &itemLength, pduLength);
                 if (cond.bad())
                 {
-                    free(context);
+                    /* Deep-free: parsePresentationContext() may have created
+                     * context->transferSyntaxList and enqueued transfer syntax
+                     * sub-items before failing; a plain free(context) would
+                     * leak both (remotely triggerable memory-exhaustion DoS).
+                     */
+                    destroyPresentationContext(&context);
                 }
                 else
                 {

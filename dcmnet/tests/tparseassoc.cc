@@ -16,7 +16,8 @@
  *  Author:  Michael Onken
  *
  *  Purpose: tests for parseAssociate() error-path cleanup of the
- *           extended negotiation sub-item list (extNegList).
+ *           extended negotiation sub-item list (extNegList) and of a
+ *           partially parsed presentation context.
  *
  */
 
@@ -26,6 +27,8 @@
 #include "dcmtk/ofstd/oftest.h"
 #include "dcmtk/dcmnet/dulstruc.h"
 #include "dcmtk/dcmnet/extneg.h"
+
+#include <cstring>                    /* for strlen() */
 
 /* parseAssociate is declared in the private dcmnet header. The test reaches
  * into libsrc/ deliberately to whitebox-test the PDU parser without going
@@ -288,6 +291,106 @@ OFTEST(dcmnet_parseAssociate_duplicate_userIdentity)
     OFCHECK(cond.bad());
     // Error-path cleanup ran: the first sub-item was freed and the pointer cleared.
     OFCHECK(assoc.userInfo.usrIdent == NULL);
+
+    delete[] buf;
+}
+
+
+/* Write a sub-item (Abstract/Transfer Syntax) into buf and advance the cursor:
+ * 4-byte sub-PDU header (type, reserved, 2-byte length) followed by `uid`. */
+static void put_syntax_subitem(unsigned char *&p, unsigned char type, const char *uid)
+{
+    const unsigned short uidLen = OFstatic_cast(unsigned short, strlen(uid));
+    *p++ = type;
+    *p++ = 0x00;                                 // reserved
+    put_u16_be(p, uidLen);                       // sub-item length
+    for (unsigned short i = 0; i < uidLen; ++i)
+        *p++ = OFstatic_cast(unsigned char, uid[i]);
+}
+
+
+/* Regression test for the remotely-triggerable, unauthenticated memory leak in
+ * parseAssociate()'s presentation-context error branch.
+ * parsePresentationContext() creates context->transferSyntaxList via
+ * LST_Create() and enqueues a DUL_SUBITEM for every Transfer Syntax it parses
+ * before a later, malformed sub-item makes it fail. The old error path ran a
+ * plain free(context), releasing only the struct and leaking the list head plus
+ * every already-parsed transfer-syntax sub-item. As the trigger is reached
+ * during A-ASSOCIATE handling -- before any AE-title/access-control check -- a
+ * remote peer could drive unbounded heap growth (DoS).
+ *
+ * Payload: one A-ASSOCIATE-RQ presentation context holding a valid Abstract
+ * Syntax and N valid Transfer Syntaxes, followed by a Transfer Syntax sub-item
+ * whose declared length exceeds the bytes remaining in the context. That makes
+ * parseSubItem() return DULC_ILLEGALPDULENGTH AFTER the N transfer syntaxes have
+ * been enqueued -- exactly the leaked set. The functional assertions below catch
+ * a regression in the cleanup logic (e.g. accidental double-free or crash); the
+ * leak itself is only directly observable under tools like LeakSanitizer.
+ */
+OFTEST(dcmnet_parseAssociate_presCtx_malformed_transferSyntax)
+{
+    const char *abstractSyntax = "1.2.840.10008.1.1";   // Verification SOP Class
+    const char *transferSyntax = "1.2.840.10008.1.2";   // Implicit VR Little Endian
+    const int   validTS        = 5;                     // transfer syntaxes leaked pre-fix
+
+    // Presentation-context header counted inside context->length:
+    // contextID(1) + reserved(1) + result(1) + reserved(1).
+    const unsigned long PRES_CTX_SUBHEADER_BYTES = 4;
+    const unsigned long asBytes    = SUBPDU_HEADER_BYTES + strlen(abstractSyntax);
+    const unsigned long tsBytes    = SUBPDU_HEADER_BYTES + strlen(transferSyntax);
+    // The trailing malformed Transfer Syntax contributes only its 4-byte header
+    // on the wire; its length field then claims more data than remains.
+    const unsigned long badTsBytes = SUBPDU_HEADER_BYTES;
+
+    // context->length covers everything after the 2-byte presentation-context
+    // length field: the 4-byte sub-header, the abstract syntax, the N valid
+    // transfer syntaxes and the malformed transfer-syntax header.
+    const unsigned short presCtxLength = OFstatic_cast(unsigned short,
+        PRES_CTX_SUBHEADER_BYTES + asBytes
+        + OFstatic_cast(unsigned long, validTS) * tsBytes + badTsBytes);
+
+    // The whole presentation-context item adds its own type+reserved+length
+    // (SUBPDU_HEADER_BYTES) in front of context->length.
+    const unsigned long presCtxItemBytes = SUBPDU_HEADER_BYTES + presCtxLength;
+    const unsigned long totalLen = ASSOC_RQ_HEADER_BYTES + presCtxItemBytes;
+    const unsigned long pduPayloadLen = totalLen - PDU_PREAMBLE_BYTES;
+
+    unsigned char *buf = new unsigned char[totalLen];
+    unsigned char *p = write_assoc_rq_header(buf, pduPayloadLen);
+
+    // Presentation Context item header.
+    *p++ = DUL_TYPEPRESENTATIONCONTEXTRQ;
+    *p++ = 0x00;                                 // reserved
+    put_u16_be(p, presCtxLength);                // presentation-context length
+    *p++ = 0x01;                                 // presentation context ID
+    *p++ = 0x00;                                 // reserved
+    *p++ = 0x00;                                 // result/reason (ignored for RQ)
+    *p++ = 0x00;                                 // reserved
+
+    // One Abstract Syntax, then N well-formed Transfer Syntaxes that are parsed
+    // and enqueued into context->transferSyntaxList before the failure.
+    put_syntax_subitem(p, DUL_TYPEABSTRACTSYNTAX, abstractSyntax);
+    for (int i = 0; i < validTS; ++i)
+        put_syntax_subitem(p, DUL_TYPETRANSFERSYNTAX, transferSyntax);
+
+    // Malformed trailing Transfer Syntax: only the 4-byte header is present, but
+    // the length field claims a full UID, so parseSubItem() trips its
+    // "subitem claims to be larger than the containing PDU" check and returns
+    // an error -- after the N transfer syntaxes above were already enqueued.
+    *p++ = DUL_TYPETRANSFERSYNTAX;
+    *p++ = 0x00;                                 // reserved
+    put_u16_be(p, OFstatic_cast(unsigned short, strlen(transferSyntax)));
+
+    OFCHECK_EQUAL(OFstatic_cast(unsigned long, p - buf), totalLen);
+
+    PRV_ASSOCIATEPDU assoc;
+    OFCondition cond = parseAssociate(buf, pduPayloadLen, &assoc);
+
+    // The malformed presentation context must be rejected.
+    OFCHECK(cond.bad());
+    // Error-path cleanup ran without crashing: the presentation context list was
+    // destroyed and its head pointer cleared.
+    OFCHECK(assoc.presentationContextList == NULL);
 
     delete[] buf;
 }

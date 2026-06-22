@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2021, OFFIS e.V.
+ *  Copyright (C) 2021-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were partly developed by
@@ -27,6 +27,17 @@
 
 struct T_ASC_Parameters;
 class LST_HEAD;
+
+/** Deep-frees a single presentation context item, including its
+ *  transferSyntaxList and all enqueued transfer syntax sub-items, and finally
+ *  the context itself. Tolerates a NULL transferSyntaxList (e.g. when parsing
+ *  failed before the list was created). Used to release a partially parsed
+ *  context that has not (yet) been adopted by a presentation context list.
+ *  @param ctx Address of the context pointer to free; set to NULL afterwards.
+ *             A NULL *ctx is handled gracefully.
+ */
+void
+destroyPresentationContext(PRV_PRESENTATIONCONTEXTITEM ** ctx);
 
 /** Destroys presentationContextList as used in dul_associatepdu
  *  @param pcList The presentation context list to free (must not be NULL)
