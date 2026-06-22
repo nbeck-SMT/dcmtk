@@ -336,8 +336,8 @@ OFTEST(dcmnet_parseAssociate_presCtx_malformed_transferSyntax)
     // Presentation-context header counted inside context->length:
     // contextID(1) + reserved(1) + result(1) + reserved(1).
     const unsigned long PRES_CTX_SUBHEADER_BYTES = 4;
-    const unsigned long asBytes    = SUBPDU_HEADER_BYTES + strlen(abstractSyntax);
-    const unsigned long tsBytes    = SUBPDU_HEADER_BYTES + strlen(transferSyntax);
+    const unsigned long asBytes    = SUBPDU_HEADER_BYTES + OFstatic_cast(unsigned long, strlen(abstractSyntax));
+    const unsigned long tsBytes    = SUBPDU_HEADER_BYTES + OFstatic_cast(unsigned long, strlen(transferSyntax));
     // The trailing malformed Transfer Syntax contributes only its 4-byte header
     // on the wire; its length field then claims more data than remains.
     const unsigned long badTsBytes = SUBPDU_HEADER_BYTES;
