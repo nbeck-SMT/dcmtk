@@ -11,19 +11,50 @@ configdir = @top_srcdir@/@configdir@
 
 include $(configdir)/@common_makefile@
 
+oficonvdir = $(top_srcdir)/../oficonv
+ofstddir = $(top_srcdir)/../ofstd
+oflogdir = $(top_srcdir)/../oflog
+dcmdatadir = $(top_srcdir)/../dcmdata
+dcmnetdir = $(top_srcdir)/../dcmnet
+dcmtlsdir = $(top_srcdir)/../dcmtls
 
-all: 
+LOCALINCLUDES = -I$(dcmnetdir)/include -I$(dcmdatadir)/include \
+	-I$(ofstddir)/include -I$(oflogdir)/include -I$(dcmtlsdir)/include \
+	$(compr_includes)
+LIBDIRS = -L$(top_srcdir)/libsrc -L$(dcmnetdir)/libsrc -L$(dcmtlsdir)/libsrc \
+	-L$(dcmdatadir)/libsrc -L$(oflogdir)/libsrc -L$(ofstddir)/libsrc \
+	-L$(oficonvdir)/libsrc $(compr_libdirs)
+LOCALLIBS = -ldcmqrdb -ldcmnet -ldcmtls -ldcmdata -loflog -lofstd -loficonv \
+	$(OPENSSLLIBS) $(ZLIBLIBS) $(TCPWRAPPERLIBS) $(CHARCONVLIBS) $(MATHLIBS)
 
-check:
+objs = tests.o taccess.o
+progs = tests
 
-check-exhaustive:
 
-install: 
+all: tests
+
+tests: $(objs)
+	$(CXX) $(CXXFLAGS) $(LIBDIRS) $(LDFLAGS) -o $@ $(objs) $(LOCALLIBS) $(LIBS)
+
+
+check: tests
+	DCMDICTPATH=../../dcmdata/data/dicom.dic ./tests
+
+check-exhaustive: tests
+	DCMDICTPATH=../../dcmdata/data/dicom.dic ./tests -x
+
+
+install:
+
 
 clean:
-	rm -f $(TRASH)
+	rm -f $(objs) $(progs) $(TRASH)
 
 distclean:
-	rm -f $(DISTTRASH)
+	rm -f $(objs) $(progs) $(DISTTRASH)
+
 
 dependencies:
+	$(CXX) -MM $(defines) $(includes) $(CPPFLAGS) $(CXXFLAGS) *.cc  > $(DEP)
+
+include $(DEP)
