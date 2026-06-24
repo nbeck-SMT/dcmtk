@@ -60,9 +60,9 @@ static OFString createStorageDir()
 static void dirtyStack()
 {
     /* the "level" buffer lives roughly 11 KB into startFindRequest()'s frame */
-    volatile char scratch[16384];
+    volatile unsigned char scratch[16384];
     for (size_t i = 0; i < sizeof(scratch); ++i)
-        scratch[i] = OFstatic_cast(char, 0xAB);
+        scratch[i] = OFstatic_cast(unsigned char, 0xAB);
 }
 
 /* Feed the given QueryRetrieveLevel value into startFindRequest() and make
