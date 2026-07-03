@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1996-2025, OFFIS e.V.
+ *  Copyright (C) 1996-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -240,12 +240,14 @@ void DiLookupTable::checkTable(unsigned long count,
                     if (gLocalByteOrder == EBO_BigEndian)                     // local machine has big endian byte ordering
                     {
                         DCMIMGLE_DEBUG("local machine has big endian byte ordering ... swapping 8 bit LUT entries");
-                        for (i = count; i != 0; --i)                          // copy 8 bit entries to new 16 bit LUT (swap hi/lo byte)
+                        for (i = Count / 2; i != 0; --i)                      // copy pairs of 8 bit entries to new 16 bit LUT (swap hi/lo byte)
                         {
                             *(q++) = *(p + 1);                                // copy low byte ...
                             *(q++) = *p;                                      // ... and then high byte
                             p += 2;                                           // jump to next hi/lo byte pair
                         }
+                        if (Count % 2 != 0)                                   // odd number of entries: copy the trailing single entry (low byte)
+                            *q = *(p + 1);                                    // avoids writing one Uint16 past the 'Count'-entry buffer
                     } else {                                                  // local machine has little endian byte ordering (or unknown)
                         for (i = Count; i != 0; --i)
                             *(q++) = *(p++);                                  // copy 8 bit entries to new 16 bit LUT
