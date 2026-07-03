@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2011-2024, OFFIS e.V.
+ *  Copyright (C) 2011-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -58,6 +58,40 @@ static const OFString &dicomToHostFilename(const OFString &dicomFilename,
             hostFilename += OFstatic_cast(char, c);
     }
     return hostFilename;
+}
+
+
+// check whether a Referenced File ID read from a DICOMDIR is safe to be used as
+// a relative pathname below the DICOMDIR directory (see declaration in the
+// header for details). Only a DICOM File ID -- backslash-separated, non-empty
+// components of uppercase letters, digits and underscore -- is accepted, which
+// contains no '.', '/', ':' or empty component and can therefore express
+// neither a ".." parent reference, nor an absolute path, nor a drive letter.
+OFBool DcmStorageSCU::isReferencedFileIDSafe(const OFString &fileID)
+{
+    const size_t length = fileID.length();
+    if (length == 0)
+        return OFFalse;
+    size_t componentLength = 0;
+    for (size_t i = 0; i < length; ++i)
+    {
+        const char c = fileID[i];
+        // backslash separates components; an empty component is not allowed
+        if (c == '\\')
+        {
+            if (componentLength == 0)
+                return OFFalse;
+            componentLength = 0;
+        }
+        // only uppercase letters, digits and underscore are allowed within a
+        // component (this excludes '.', '/', ':', space and lowercase letters)
+        else if (((c >= 'A') && (c <= 'Z')) || ((c >= '0') && (c <= '9')) || (c == '_'))
+            ++componentLength;
+        else
+            return OFFalse;
+    }
+    // reject a trailing backslash (empty last component)
+    return (componentLength > 0);
 }
 
 
@@ -510,6 +544,14 @@ OFCondition DcmStorageSCU::addDicomFilesFromDICOMDIR(const OFFilename &filename,
                     }
                     // finally, try to add this information to the transfer list
                     status = checkSOPInstance(sopClassUID, sopInstanceUID, transferSyntaxUID, checkValues);
+                    // reject Referenced File IDs that would escape the DICOMDIR directory
+                    // (path traversal via a ".." component or an absolute path), see SYSS-2026-047
+                    if (status.good() && !isReferencedFileIDSafe(fileID))
+                    {
+                        DCMNET_ERROR("cannot add DICOM file from DICOMDIR: unsafe Referenced File ID '"
+                            << fileID << "' (possible path traversal)");
+                        status = EC_InvalidFilename;
+                    }
                     if (status.good())
                     {
                         OFString tmpString;

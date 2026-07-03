@@ -8,6 +8,7 @@ DCMTK_ADD_TEST_EXECUTABLE(dcmnet_tests
   tpool.cc
   tscuscp.cc
   tscusession.cc
+  tstorescu.cc
 )
 
 # make sure executables are linked to the corresponding libraries
