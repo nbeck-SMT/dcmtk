@@ -323,8 +323,21 @@ OFCondition DcmXMLParseHelper::putElementContent(
                     if (buflen & 1)
                         buflen++;
                     Uint8 *buf = NULL;
+                    /* reject files that are too large to be stored in a DICOM element:
+                     * the buffer length is narrowed to a 32-bit value for the allocation
+                     * below, whereas the full (size_t) file size is used as the fread()
+                     * length. For files larger than the 32-bit DICOM value length limit
+                     * this would allocate a truncated buffer and then overflow it while
+                     * reading.
+                     */
+                    if (buflen > 0xfffffffeUL)
+                    {
+                        DCMDATA_WARN("DcmXMLParseHelper: binary data file too large ("
+                            << fileSize << " bytes) for element " << element->getTag() << ": " << filename);
+                        result = EC_MaximumLengthViolated;
+                    }
                     /* create buffer of OB or OW data */
-                    if (dcmEVR == EVR_OW)
+                    else if (dcmEVR == EVR_OW)
                     {
                         Uint16 *buf16 = NULL;
                         result = element->createUint16Array(OFstatic_cast(Uint32, buflen / 2), buf16);
