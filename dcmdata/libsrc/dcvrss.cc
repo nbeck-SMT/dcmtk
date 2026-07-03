@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1994-2024, OFFIS e.V.
+ *  Copyright (C) 1994-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -321,6 +321,14 @@ OFCondition DcmSignedShort::putString(const char *stringVal,
     const unsigned long vm = DcmElement::determineVM(stringVal, stringLen);
     if (vm > 0)
     {
+        /* reject values whose overall length would exceed the 32-bit DICOM value length
+         * limit; this also prevents an integer overflow in the allocation size below
+         */
+        if (vm > DCM_UndefinedLength / sizeof(Sint16))
+        {
+            errorFlag = EC_ElemLengthExceeds32BitField;
+            return errorFlag;
+        }
         Sint16 *field = new Sint16[vm];
         OFString value;
         size_t pos = 0;

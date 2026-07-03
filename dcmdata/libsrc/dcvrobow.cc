@@ -436,6 +436,15 @@ OFCondition DcmOtherByteOtherWord::putString(const char *stringVal,
         const DcmEVR evr = getTag().getEVR();
         Uint8 *byteField = NULL;
         Uint16 *wordField = NULL;
+        /* reject values whose overall length would exceed the 32-bit DICOM value length
+         * limit; this also prevents an integer overflow in the allocation size below
+         */
+        const size_t bytesPerValue = (evr == EVR_OW || evr == EVR_lt) ? sizeof(Uint16) : sizeof(Uint8);
+        if (vm > DCM_UndefinedLength / bytesPerValue)
+        {
+            errorFlag = EC_ElemLengthExceeds32BitField;
+            return errorFlag;
+        }
         /* create new value field */
         if (evr == EVR_OW || evr == EVR_lt)
             wordField = new Uint16[vm];
