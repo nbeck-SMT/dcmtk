@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2002-2025, OFFIS e.V.
+ *  Copyright (C) 2002-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -4479,8 +4479,15 @@ OFBool DicomDirInterface::getIconFromFile(const OFFilename &filename,
                 {
                     unsigned int pgmWidth, pgmHeight = 0;
                     /* skip optional comment line and get width and height */
+                    /* reject dimensions that do not fit into 16 bits: the image scaler truncates
+                     * them to Uint16 (see DicomDirImageImplementation::scaleData()), so larger
+                     * values would cause an out-of-bounds read while scaling; limiting both values
+                     * to 0xffff also ensures that the buffer size computation below (pgmWidth *
+                     * pgmHeight) cannot overflow
+                     */
                     if (((*line != '#') || (file.fgets(line, maxline) != NULL)) &&
-                        (sscanf(line, "%u %u", &pgmWidth, &pgmHeight) > 0) && (pgmWidth > 0) && (pgmHeight > 0))
+                        (sscanf(line, "%u %u", &pgmWidth, &pgmHeight) > 0) &&
+                        (pgmWidth > 0) && (pgmHeight > 0) && (pgmWidth <= 0xffffu) && (pgmHeight <= 0xffffu))
                     {
                         unsigned int pgmMax = 0;
                         /* get maximum gray value */
