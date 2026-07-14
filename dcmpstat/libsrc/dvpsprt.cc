@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2022, OFFIS e.V.
+ *  Copyright (C) 2000-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -362,6 +362,17 @@ void DVPSPrintSCP::handleClient()
                 << STD_NAMESPACE hex << STD_NAMESPACE setfill('0') << STD_NAMESPACE setw(4)
                 << OFstatic_cast(unsigned int, msg.CommandField));
               break;
+          }
+
+          // Free the Attribute Identifier List that DIMSE_receiveCommand() allocated
+          // while parsing an N-GET-RQ (see getAttributeList() in dimcmd.cc). T_DIMSE_Message
+          // has no destructor, so without this the buffer would leak on every N-GET request,
+          // allowing a remote peer to exhaust the print SCP's memory.
+          if ((msg.CommandField == DIMSE_N_GET_RQ) && (msg.msg.NGetRQ.AttributeIdentifierList != NULL))
+          {
+            free(msg.msg.NGetRQ.AttributeIdentifierList);
+            msg.msg.NGetRQ.AttributeIdentifierList = NULL;
+            msg.msg.NGetRQ.ListCount = 0;
           }
       }
       else

@@ -1291,6 +1291,17 @@ OFCondition DcmSCP::receiveNGETRequest(T_DIMSE_N_GetRQ& reqMessage,
     // An empty list means no Attribute Identifier List was specified; per PS3.7 §10.1.2.1.5
     // all attributes are assumed in that case.
 
+    // Free the Attribute Identifier List buffer that DIMSE_receiveCommand() allocated
+    // while parsing the N-GET-RQ command set (see getAttributeList() in dimcmd.cc).
+    // T_DIMSE_Message has no destructor, so without this the buffer would leak on every
+    // N-GET request, allowing a remote peer to exhaust the SCP's memory.
+    if (reqMessage.AttributeIdentifierList != NULL)
+    {
+        free(reqMessage.AttributeIdentifierList);
+        reqMessage.AttributeIdentifierList = NULL;
+        reqMessage.ListCount = 0;
+    }
+
     return EC_Normal;
 }
 
