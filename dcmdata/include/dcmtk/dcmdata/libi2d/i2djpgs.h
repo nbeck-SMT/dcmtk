@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2007-2025, OFFIS e.V.
+ *  Copyright (C) 2007-2026, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -134,7 +134,8 @@ public:
 
     /** Extracts the raw JPEG pixel data stream from a JPEG file and returns some
      *  further information about this pixel data. Raw means here that all APP
-     *  markers (e.g. JFIF information) are removed from the JPEG stream.
+     *  markers (e.g. JFIF information) are removed from the JPEG stream, unless
+     *  they are explicitly kept (see setKeepAPPn() and setKeepAPP()).
      *  The pixel data returned is a JPEG stream in JPEG interchange format.
      *  This function allocates memory for the pixel data returned to the user.
      *  The caller of this function is responsible for deleting the memory buffer.
@@ -211,6 +212,21 @@ public:
      *   @param enabled - [in] OFTrue: copy APPn, OFFalse: cut off APPn info
      */
     void setKeepAPPn(const OFBool enabled);
+
+    /**  Keep (or remove) a single APPn marker in the output file even when the
+     *   other APPn markers are cut off (i.e. setKeepAPPn(OFFalse)). This can be
+     *   used, for example, to retain APP14 (number 14), which typically holds the
+     *   Adobe color transform marker whose transform flag some JPEG decoders rely
+     *   on to decide whether a YCbCr to RGB conversion has to be applied; removing
+     *   it can make such decoders render the image with wrong colors. The marker
+     *   is kept by number, irrespective of its actual application identifier. Can
+     *   be called repeatedly to keep several markers. By default no individual
+     *   APPn marker is kept.
+     *   @param appNumber - [in] APPn marker number to keep/remove (0..15);
+     *                      values outside this range are ignored
+     *   @param enabled - [in] OFTrue: keep this APPn marker, OFFalse: cut it off
+     */
+    void setKeepAPP(const Uint8 appNumber, const OFBool enabled = OFTrue);
 
     /**  If enabled, COM marker is also copied to the output file.
      *   Default: true
@@ -395,6 +411,11 @@ protected:
     /// the SOFn marker (which is relevant for extracting width/height and so on.
     /// Default: false
     OFBool m_keepAPPn;
+
+    /// Bit mask of individual APPn markers to keep in the output even when
+    /// m_keepAPPn is OFFalse. Bit i (i = 0..15) corresponds to marker APPi.
+    /// See setKeepAPP(). Default: 0 (no individual APPn marker kept).
+    Uint16 m_keepAPPnMask;
 
     /// If true, COM segment is also copied to the output file.
     /// Default: true

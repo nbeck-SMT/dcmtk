@@ -153,6 +153,8 @@ static void addCmdLineOptions(OFCommandLine& cmd)
       cmd.addOption("--disable-ext",         "-de",     "disable support for extended sequential JPEG");
       cmd.addOption("--insist-on-jfif",      "-jf",     "insist on JFIF header");
       cmd.addOption("--keep-appn",           "-ka",     "keep APPn sections (except JFIF)");
+      cmd.addOption("--keep-app",                    1, "[n]umber: integer (0..15)",
+                                                        "keep single APPn marker, e.g. 14 (Adobe)");
       cmd.addOption("--remove-com",          "-rc",     "remove COM segment");
 #ifdef WITH_LIBXML
     cmd.addSubGroup("XML validation:");
@@ -435,6 +437,14 @@ static OFCondition startConversion(
       jpgSource->setInsistOnJFIF(OFTrue);
     if ( cmd.findOption("--keep-appn") )
       jpgSource->setKeepAPPn(OFTrue);
+    if ( cmd.findOption("--keep-app", 0, OFCommandLine::FOM_FirstFromLeft) )
+    {
+      do {
+        OFCmdUnsignedInt appNumber = 0;
+        app.checkValue(cmd.getValueAndCheckMinMax(appNumber, 0, 15));
+        jpgSource->setKeepAPP(OFstatic_cast(Uint8, appNumber));
+      } while ( cmd.findOption("--keep-app", 0, OFCommandLine::FOM_NextFromLeft) );
+    }
     if ( cmd.findOption("--remove-com") )
       jpgSource->setKeepCOM(OFFalse);
   }

@@ -33,6 +33,7 @@ I2DJpegSource::I2DJpegSource()
     , m_disableExtSeqTs(OFFalse)
     , m_insistOnJFIF(OFFalse)
     , m_keepAPPn(OFFalse)
+    , m_keepAPPnMask(0)
     , m_keepCOM(OFTrue)
     , m_lossyCompressed(OFTrue)
     , m_isJPEGLS(OFFalse)
@@ -77,6 +78,17 @@ void I2DJpegSource::setInsistOnJFIF(const OFBool enabled)
 void I2DJpegSource::setKeepAPPn(const OFBool enabled)
 {
     m_keepAPPn = enabled;
+}
+
+void I2DJpegSource::setKeepAPP(const Uint8 appNumber, const OFBool enabled)
+{
+    if (appNumber > 15)
+        return;
+    const Uint16 bit = OFstatic_cast(Uint16, 1 << appNumber);
+    if (enabled)
+        m_keepAPPnMask = OFstatic_cast(Uint16, m_keepAPPnMask | bit);
+    else
+        m_keepAPPnMask = OFstatic_cast(Uint16, m_keepAPPnMask & ~bit);
 }
 
 void I2DJpegSource::setKeepCOM(const OFBool enabled)
@@ -616,7 +628,15 @@ OFCondition I2DJpegSource::extractRawJPEGStream(char*& pixelData, Uint32& pixLen
             // No need to subtract / add bytes
             break;
         }
-        else if (!m_keepAPPn && (marker >= E_JPGMARKER_APP0 && marker <= E_JPGMARKER_APP15))
+        // By default all APPn markers are removed from the stream. Individual
+        // APPn markers can be retained via setKeepAPP() (m_keepAPPnMask), e.g. to
+        // keep APP14 (0xFFEE), which typically holds the Adobe color transform
+        // marker whose transform flag some JPEG decoders rely on to decide whether
+        // a YCbCr to RGB conversion has to be applied; dropping it can make such
+        // decoders render wrong colors. The marker is kept by number, regardless
+        // of its actual application identifier.
+        else if (!m_keepAPPn && (marker >= E_JPGMARKER_APP0 && marker <= E_JPGMARKER_APP15)
+                 && ((m_keepAPPnMask & OFstatic_cast(Uint16, 1 << (marker - E_JPGMARKER_APP0))) == 0))
         {
             DCMDATA_LIBI2D_DEBUG("I2DJpegSource: Skipping application segment APP" << (marker - E_JPGMARKER_APP0));
             jpegFile.fseek((*entry)->bytePos - jpegFile.ftell(), SEEK_CUR);

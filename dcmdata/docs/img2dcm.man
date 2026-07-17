@@ -94,6 +94,9 @@ JPEG format:
   -ka   --keep-appn
           keep APPn sections (except JFIF)
 
+        --keep-app  [n]umber: integer (0..15)
+          keep single APPn marker, e.g. 14 (Adobe)
+
   -rc   --remove-com
           remove COM segment
 
@@ -391,6 +394,17 @@ before, JFIF information is always removed by \b img2dcm. However, when using
 this option, the APP2 marker is retained, but \b img2dcm does not create an
 equivalent ICC Profile (0028,2000) attribute.
 
+If you only want to retain specific APPn markers instead of all of them, the
+option \e --keep-app followed by the marker number (0 to 15) can be used, and it
+may be repeated to keep several markers.  The marker is kept by its number,
+irrespective of its actual application identifier.  A typical use case is keeping
+APP14 (\e --keep-app 14), which usually holds the Adobe color transform marker
+whose transform flag some JPEG decoders and viewers rely on to decide whether a
+YCbCr to RGB conversion has to be applied during decoding.  Without that marker
+such decoders may render the image with wrong colors, while keeping it is
+harmless otherwise.  Note that the default behavior (removing all APPn markers)
+is unchanged.
+
 \subsubsection img2dcm_jpegls_input_plugin JPEG-LS Input Plugin
 
 The JPEG-LS plugin has been integrated directly into the main JPEG plugin.
@@ -581,6 +595,6 @@ Photography images
 
 \section img2dcm_copyright COPYRIGHT
 
-Copyright (C) 2007-2025 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 2007-2ß26 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */
