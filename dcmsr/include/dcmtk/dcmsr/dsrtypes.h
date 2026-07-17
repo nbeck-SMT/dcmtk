@@ -231,6 +231,9 @@ extern DCMTK_DCMSR_EXPORT const OFConditionConst SR_EC_InvalidTemplateStructure;
 /// error: cannot process document tree with included templates
 extern DCMTK_DCMSR_EXPORT const OFConditionConst SR_EC_CannotProcessIncludedTemplates;
 
+/// error: maximum nesting level exceeded, e.g. for content items
+extern DCMTK_DCMSR_EXPORT const OFConditionConst SR_EC_MaximumNestingLevelExceeded;
+
 ///@}
 
 

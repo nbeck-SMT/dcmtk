@@ -216,7 +216,7 @@ OFCondition DSRDocumentTreeNode::readXML(const DSRXMLDocument &doc,
     if (depth > DCMSR_MAX_XML_NESTING_LEVEL)
     {
         DCMSR_WARN("Maximum nesting level (" << DCMSR_MAX_XML_NESTING_LEVEL << ") of XML elements exceeded");
-        return EC_NestingDepthLimitExceeded;
+        return SR_EC_MaximumNestingLevelExceeded;
     }
 
     OFCondition result = SR_EC_InvalidDocument;

@@ -310,6 +310,7 @@ makeOFConditionConst(SR_EC_CodedEntryIsExtensionOfContextGroup, OFM_dcmsr, 33, O
 makeOFConditionConst(SR_EC_ValueSetConstraintViolated,          OFM_dcmsr, 34, OF_error, "Value Set Constraint violated");
 makeOFConditionConst(SR_EC_InvalidTemplateStructure,            OFM_dcmsr, 35, OF_error, "Invalid Template Structure");
 makeOFConditionConst(SR_EC_CannotProcessIncludedTemplates,      OFM_dcmsr, 36, OF_error, "Cannot process Document Tree with included Templates");
+makeOFConditionConst(SR_EC_MaximumNestingLevelExceeded,         OFM_dcmsr, 37, OF_error, "Maximum nesting level exceeded");
 
 // NOTE:
 // error codes 1000 and above are reserved for the submodule "cmr"
