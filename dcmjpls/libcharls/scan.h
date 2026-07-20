@@ -220,7 +220,14 @@ public:
 		LONG Px			= traits.CorrectPrediction(pred + ApplySign(ctx.C, sign));
 
 		LONG ErrVal;
-		const Code& code		= decodingTables[k].Get(STRATEGY::PeekByte());
+		// decodingTables[] only holds entries for Golomb parameter k = 0..15
+		// (CTable decodingTables[16]). For crafted or corrupt input GetGolomb()
+		// can return k >= 16; indexing decodingTables[k] would then read past
+		// the end of the array (out-of-bounds read). Restrict the fast-path
+		// table lookup to valid indices and fall back to the generic decoder
+		// otherwise (the tables for k >= 8 are empty anyway, so this yields the
+		// same result already produced for those k).
+		const Code code = (k < 16) ? decodingTables[k].Get(STRATEGY::PeekByte()) : Code(0, 0);
 		if (code.GetLength() != 0)
 		{
 			STRATEGY::Skip(code.GetLength());
